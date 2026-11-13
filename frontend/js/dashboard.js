@@ -183,3 +183,4 @@ function getScoreClass(score) {
   if (score >= 45) return 'score-mid';
   return 'score-low';
 }
+
