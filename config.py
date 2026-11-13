@@ -45,7 +45,9 @@ class Config:
     MAX_CONTENT_LENGTH: int = 5 * 1024 * 1024   # 5 MB hard limit enforced by Flask
 
     # ── Session ────────────────────────────────────────────────────────────────
-    SESSION_TYPE: str = "filesystem"             # store sessions on disk, not in cookie
+    import cachelib
+    SESSION_TYPE: str = "cachelib"
+    SESSION_CACHELIB = cachelib.FileSystemCache(cache_dir=str(BASE_DIR / "flask_session"), threshold=1000)
     SESSION_COOKIE_HTTPONLY: bool = True         # JS cannot read the cookie
     SESSION_COOKIE_SAMESITE: str = "Lax"        # CSRF mitigation
 

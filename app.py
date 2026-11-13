@@ -53,6 +53,14 @@ def create_app(env: str | None = None) -> Flask:
     # Database: bind SQLAlchemy to this app instance
     init_db(app)
 
+    # ── Session Management ────────────────────────────────────────────────────
+    # Server-side filesystem session storage as configured in config.py
+    try:
+        from flask_session import Session
+        Session(app)
+    except Exception as e:
+        app.logger.warning(f"Flask-Session initialization skipped: {e}")
+
     # ── Register route blueprints ─────────────────────────────────────────────
     # Each blueprint lives in backend/routes.py and groups related endpoints.
     # We import here (inside the factory) to prevent circular imports.

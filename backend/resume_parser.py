@@ -22,9 +22,12 @@ def extract_text_from_pdf(file_path: str | Path) -> str:
     text_chunks = []
     file_path = str(file_path)
 
-    # Method 1: PyMuPDF (fitz)
+    # Method 1: PyMuPDF (pymupdf / fitz)
     try:
-        import fitz  # PyMuPDF
+        try:
+            import pymupdf as fitz
+        except ImportError:
+            import fitz
         doc = fitz.open(file_path)
         for page in doc:
             t = page.get_text()
