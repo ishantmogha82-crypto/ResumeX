@@ -1,0 +1,45 @@
+# ── Python ─────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# ── Virtual environment ────────────────────────────────────────────────────────
+venv/
+env/
+.venv/
+.env/
+
+# ── Environment secrets ────────────────────────────────────────────────────────
+.env
+
+# ── Database ───────────────────────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Uploaded files & generated reports ────────────────────────────────────────
+uploads/
+reports/
+
+# ── Flask session files ────────────────────────────────────────────────────────
+flask_session/
+
+# ── IDE / editor ──────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Testing & coverage ─────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+

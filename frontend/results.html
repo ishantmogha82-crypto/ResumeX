@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analysis Results — ResumeX</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="sidebar-logo">
+          ResumeX <span class="logo-badge">AI</span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/dashboard.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="/analyze.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+          Analyze Resume
+        </a>
+        <a href="/history.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          Analysis History
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="user-avatar" id="user-avatar">U</div>
+          <div class="user-info">
+            <div class="user-name" id="user-name">Loading...</div>
+            <div class="user-email" id="user-email">...</div>
+          </div>
+        </div>
+        <button id="btn-logout" class="btn btn-outline btn-sm" style="width: 100%;">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div id="results-loader" class="loading-container" style="min-height: 400px;">
+        <div class="spinner spinner-lg"></div>
+        <div style="font-size: 16px; margin-top: 12px;">Computing vector cosine similarity and skill coverage...</div>
+      </div>
+
+      <div id="results-wrapper" style="display: none;">
+        <div class="content-header">
+          <div>
+            <h1 class="page-title" id="res-job-title">Target Role Analysis</h1>
+            <p class="page-subtitle" id="res-meta-sub">Evaluated against uploaded resume</p>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <a href="/analyze.html" class="btn btn-outline">Analyze Another</a>
+            <button id="btn-download-pdf" class="btn btn-primary">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+              </svg>
+              Download PDF Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Overall Score Card -->
+        <div class="results-header-card">
+          <div class="score-circle-wrapper" id="score-circle">
+            <div class="score-circle-inner">
+              <div class="score-number" id="overall-score-val">0%</div>
+              <div class="score-label">Match Score</div>
+            </div>
+          </div>
+
+          <div class="results-meta">
+            <h2>Overall Compatibility Score</h2>
+            <p id="score-summary-text">
+              The overall score is a weighted synthesis of mathematical semantic similarity (TF-IDF vector cosine angle) and required skill keyword coverage.
+            </p>
+            <div class="scores-breakdown">
+              <div class="mini-score">
+                <div class="mini-score-label">Skill Coverage Score</div>
+                <div class="mini-score-val" id="skill-score-val">0%</div>
+              </div>
+              <div class="mini-score">
+                <div class="mini-score-label">Semantic Similarity (TF-IDF)</div>
+                <div class="mini-score-val" id="semantic-score-val">0%</div>
+              </div>
+              <div class="mini-score">
+                <div class="mini-score-label">Matched Skills Count</div>
+                <div class="mini-score-val" id="matched-count-val">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <span class="sheet-badge" id="evaluation-status-badge">EVALUATION COMPLETE</span>
+          </div>
+        </div>
+
+        <!-- Skills Comparison Grid: Matched vs Missing -->
+        <div class="skills-comparison-grid">
+          <!-- Matched Skills -->
+          <div class="skills-panel">
+            <div class="skills-panel-title">
+              <span>Matched Skills</span>
+              <span class="count-pill" id="matched-pill">0</span>
+            </div>
+            <div class="skills-tags-wrap" id="matched-skills-container">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Missing Skills -->
+          <div class="skills-panel">
+            <div class="skills-panel-title">
+              <span>Missing High-Priority Skills</span>
+              <span class="count-pill" id="missing-pill">0</span>
+            </div>
+            <div class="skills-tags-wrap" id="missing-skills-container">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- All Detected Resume Skills -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3 class="panel-title">All Skills Detected on Resume</h3>
+            <span class="count-pill" id="total-resume-skills-pill">0 Total</span>
+          </div>
+          <div class="skills-tags-wrap" id="resume-skills-container">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Resume Quality Section Audit (6 Sections) -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3 class="panel-title">Resume Section Completeness Audit</h3>
+          </div>
+          <p style="margin-bottom: 20px; font-size: 14px;">
+            ATS scanners rely on recognized structural headings to segment your profile.
+          </p>
+          <div class="section-analysis-grid" id="section-grid">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Actionable Recommendations -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3 class="panel-title">Actionable Improvement Recommendations</h3>
+          </div>
+          <div class="recommendations-list" id="recommendations-list">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="form-hint" style="text-align: center; margin: 32px 0 16px;">
+          * Note: Compatibility ratings are computational metrics calculated from document text comparison. They do not constitute hiring guarantees.
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/results.js"></script>
+</body>
+</html>

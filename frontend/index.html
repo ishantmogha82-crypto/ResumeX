@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumeX — AI-Powered Resume Analyzer</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-logo">
+        ResumeX <span class="logo-badge">AI</span>
+      </a>
+
+      <button class="navbar-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+
+      <ul class="navbar-links" id="nav-menu">
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+
+      <div class="navbar-actions" id="nav-auth-actions">
+        <a href="/login.html" class="btn btn-outline btn-sm">Sign In</a>
+        <a href="/register.html" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span> Intelligent Resume Intelligence Engine
+          </div>
+          <h1 class="hero-title">Your Resume. Decoded.</h1>
+          <p class="hero-subtitle">
+            Understand your resume, discover your skill gaps, and get closer to your dream job with intelligent resume analysis and ATS-grade matching.
+          </p>
+          <div class="hero-actions">
+            <a href="/analyze.html" class="btn btn-primary btn-lg">Analyze Resume</a>
+            <a href="#features" class="btn btn-secondary btn-lg">Explore Features</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="visual-sheet">
+            <div class="sheet-header">
+              <div class="sheet-line h-14 w-40"></div>
+              <span class="sheet-badge">CANDIDATE PROFILE</span>
+            </div>
+            <div class="sheet-line w-80"></div>
+            <div class="sheet-line w-60"></div>
+            <div class="sheet-line w-100"></div>
+            <div class="sheet-line w-40"></div>
+          </div>
+          <div class="visual-floater">
+            <div>
+              <div class="floater-score">88%</div>
+              <div class="floater-label">Compatibility Match</div>
+            </div>
+            <span class="sheet-badge">VERIFIED</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Capabilities</div>
+        <h2 class="section-title">Engineered for High-Precision Job Matching</h2>
+        <p class="section-subtitle">
+          ResumeX analyzes your resume from every dimension using natural language processing, vector similarity, and skill taxonomy graphs.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">AI Resume Analysis</h3>
+          <p class="feature-desc">
+            Deep text parsing across standard sections: experience, education, certifications, and technical projects.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">ATS Compatibility</h3>
+          <p class="feature-desc">
+            Ensure parsing bots read your contact details, job timelines, and bullet points without formatting errors.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Skill Extraction</h3>
+          <p class="feature-desc">
+            Extracts programming languages, frameworks, developer tools, libraries, and soft skills with word boundary precision.
+          </p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Job Description Matching</h3>
+          <p class="feature-desc">
+            Calculates mathematical TF-IDF cosine similarity between your candidate profile and the target role description.
+          </p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Missing Skill Detection</h3>
+          <p class="feature-desc">
+            Surfaces critical keywords and prerequisites demanded in the job posting that are currently absent in your resume.
+          </p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Improvement Suggestions</h3>
+          <p class="feature-desc">
+            Contextual, actionable recommendations to improve structure, quantifiable impact, and keyword alignment.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Workflow</div>
+        <h2 class="section-title">Four Steps to Career Clarity</h2>
+        <p class="section-subtitle">A streamlined, privacy-conscious workflow built for speed.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01 // STEP</div>
+          <h3 class="step-title">Upload Resume</h3>
+          <p class="step-desc">Drop your PDF or DOCX resume. Files are securely processed and parsed without third-party exposure.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">02 // STEP</div>
+          <h3 class="step-title">Enter Job Details</h3>
+          <p class="step-desc">Paste the job description, role title, and company name to benchmark against specific expectations.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">03 // STEP</div>
+          <h3 class="step-title">Analyze Profile</h3>
+          <p class="step-desc">Our engine extracts skills, computes vector similarity, detects missing requirements, and audits section completeness.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">04 // STEP</div>
+          <h3 class="step-title">Actionable Insights</h3>
+          <p class="step-desc">Review matched competencies, fill missing keyword gaps, and download a clean PDF audit report.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Designed for Modern Job Seekers</h2>
+        <p>
+          ResumeX gives students, fresh graduates, and career changers the exact analytical clarity needed to stand out in automated recruitment pipelines.
+        </p>
+        <a href="/register.html" class="btn btn-primary btn-lg">Create Free Account</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="navbar-logo">ResumeX <span class="logo-badge">AI</span></div>
+          <p>
+            The premium, monochrome resume intelligence platform for the modern workforce.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul class="footer-links">
+            <li><a href="/analyze.html">Analyze Resume</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+            <li><a href="/history.html">Analysis History</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul class="footer-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Account</h4>
+          <ul class="footer-links">
+            <li><a href="/login.html">Sign In</a></li>
+            <li><a href="/register.html">Register</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-disclaimer">
+          <strong>Notice:</strong> Compatibility scores are algorithmic estimates based on text similarity and skill coverage, not guarantees of employment or actual proprietary third-party ATS rankings.
+        </div>
+        <div>
+          &copy; 2026 ResumeX. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

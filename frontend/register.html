@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account — ResumeX</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-logo">
+        ResumeX <span class="logo-badge">AI</span>
+      </a>
+      <div class="navbar-actions">
+        <a href="/login.html" class="btn btn-outline btn-sm">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">ResumeX</div>
+        <h1>Create Account</h1>
+        <p>Get started with automated resume feedback and gap analysis</p>
+      </div>
+
+      <div class="form-error" id="auth-error" role="alert"></div>
+
+      <form id="register-form">
+        <div class="form-group">
+          <label class="form-label" for="name">Full Name</label>
+          <input type="text" id="name" class="form-input" placeholder="Alex Morgan" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input type="email" id="email" class="form-input" placeholder="alex@example.com" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" class="form-input" placeholder="At least 6 characters" minlength="6" required autocomplete="new-password">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" class="form-input" placeholder="Repeat your password" minlength="6" required autocomplete="new-password">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;" id="btn-submit">
+          <span>Create Free Account</span>
+        </button>
+
+        <div class="form-footer">
+          Already have an account? <a href="/login.html">Sign in</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <div id="toast-container"></div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>
