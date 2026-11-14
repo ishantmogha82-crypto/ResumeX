@@ -12,7 +12,11 @@ Provides:
 import re
 import math
 from typing import Dict, List, Any, Tuple
-from backend.skill_extractor import extract_skills, compare_skills
+from backend.skill_extractor import (
+    extract_skills,
+    compare_skills,
+    extract_technical_skills_hybrid
+)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -314,6 +318,12 @@ def analyze_resume_against_job(resume_text: str, job_description: str) -> Dict[s
         semantic_sim=similarity_score
     )
 
+    # 7. Structured Technical Skills Categorization (Hybrid Regex + ML)
+    hybrid_extraction = extract_technical_skills_hybrid(resume_text)
+    technical_skills = hybrid_extraction.get("technical_skills", {})
+    extraction_method = hybrid_extraction.get("extraction_method", "regex_and_ml")
+    evidence = hybrid_extraction.get("evidence", {})
+
     return {
         "similarity_score": similarity_score,
         "skill_match_score": skill_match_score,
@@ -323,5 +333,8 @@ def analyze_resume_against_job(resume_text: str, job_description: str) -> Dict[s
         "resume_skills": resume_skills,
         "jd_skills": jd_skills,
         "section_analysis": section_analysis,
-        "recommendations": recommendations
+        "recommendations": recommendations,
+        "technical_skills": technical_skills,
+        "extraction_method": extraction_method,
+        "evidence": evidence
     }

@@ -26,6 +26,19 @@ def init_db(app):
     db.init_app(app)
     with app.app_context():
         db.create_all()   # creates tables if they don't already exist
+        # Gracefully add migration columns if table already exists
+        try:
+            from sqlalchemy import text
+            with db.engine.connect() as conn:
+                res = conn.execute(text("PRAGMA table_info(analyses)")).fetchall()
+                existing_cols = {row[1] for row in res}
+                if existing_cols and "technical_skills" not in existing_cols:
+                    conn.execute(text("ALTER TABLE analyses ADD COLUMN technical_skills TEXT"))
+                if existing_cols and "extraction_method" not in existing_cols:
+                    conn.execute(text("ALTER TABLE analyses ADD COLUMN extraction_method VARCHAR(50) DEFAULT 'regex_and_ml'"))
+                conn.commit()
+        except Exception:
+            pass
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -162,12 +175,14 @@ class Analysis(db.Model):
     overall_score     = db.Column(db.Float, nullable=False, default=0.0)
 
     # JSON-encoded lists / dicts
-    matched_skills   = db.Column(db.Text, nullable=True)   # JSON list of strings
-    missing_skills   = db.Column(db.Text, nullable=True)   # JSON list of strings
-    resume_skills    = db.Column(db.Text, nullable=True)   # JSON list of strings
-    jd_skills        = db.Column(db.Text, nullable=True)   # JSON list of strings
-    section_analysis = db.Column(db.Text, nullable=True)   # JSON dict
-    recommendations  = db.Column(db.Text, nullable=True)   # JSON list of strings
+    matched_skills    = db.Column(db.Text, nullable=True)   # JSON list of strings
+    missing_skills    = db.Column(db.Text, nullable=True)   # JSON list of strings
+    resume_skills     = db.Column(db.Text, nullable=True)   # JSON list of strings
+    jd_skills         = db.Column(db.Text, nullable=True)   # JSON list of strings
+    section_analysis  = db.Column(db.Text, nullable=True)   # JSON dict
+    recommendations   = db.Column(db.Text, nullable=True)   # JSON list of strings
+    technical_skills  = db.Column(db.Text, nullable=True)   # JSON dict of 5 technical categories
+    extraction_method = db.Column(db.String(50), nullable=True, default="regex_and_ml")
 
     created_at = db.Column(db.DateTime(timezone=True), default=utcnow, nullable=False)
 
@@ -177,31 +192,35 @@ class Analysis(db.Model):
     def to_dict(self) -> dict:
         import json
 
-        def _loads(val):
+        def _loads(val, default_empty=None):
             """Safely decode a JSON column value."""
+            if default_empty is None:
+                default_empty = []
             if val is None:
-                return []
+                return default_empty
             try:
                 return json.loads(val)
             except (json.JSONDecodeError, TypeError):
-                return []
+                return default_empty
 
         return {
-            "id":               self.id,
-            "resume_id":        self.resume_id,
-            "resume_filename":  self.resume.original_name if self.resume else None,
-            "job_title":        self.job_title,
-            "company_name":     self.company_name,
-            "similarity_score": round(self.similarity_score, 1),
-            "skill_match_score":round(self.skill_match_score, 1),
-            "overall_score":    round(self.overall_score, 1),
-            "matched_skills":   _loads(self.matched_skills),
-            "missing_skills":   _loads(self.missing_skills),
-            "resume_skills":    _loads(self.resume_skills),
-            "jd_skills":        _loads(self.jd_skills),
-            "section_analysis": _loads(self.section_analysis) or {},
-            "recommendations":  _loads(self.recommendations),
-            "created_at":       self.created_at.isoformat(),
+            "id":                self.id,
+            "resume_id":         self.resume_id,
+            "resume_filename":   self.resume.original_name if self.resume else None,
+            "job_title":         self.job_title,
+            "company_name":      self.company_name,
+            "similarity_score":  round(self.similarity_score, 1),
+            "skill_match_score": round(self.skill_match_score, 1),
+            "overall_score":     round(self.overall_score, 1),
+            "matched_skills":    _loads(self.matched_skills, []),
+            "missing_skills":    _loads(self.missing_skills, []),
+            "resume_skills":     _loads(self.resume_skills, []),
+            "jd_skills":         _loads(self.jd_skills, []),
+            "section_analysis":  _loads(self.section_analysis, {}),
+            "recommendations":   _loads(self.recommendations, []),
+            "technical_skills":  _loads(self.technical_skills, {}),
+            "extraction_method": self.extraction_method or "regex_and_ml",
+            "created_at":        self.created_at.isoformat(),
         }
 
     def __repr__(self):

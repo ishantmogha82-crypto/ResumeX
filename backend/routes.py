@@ -257,7 +257,9 @@ def analyze():
         resume_skills=json.dumps(result["resume_skills"]),
         jd_skills=json.dumps(result["jd_skills"]),
         section_analysis=json.dumps(result["section_analysis"]),
-        recommendations=json.dumps(result["recommendations"])
+        recommendations=json.dumps(result["recommendations"]),
+        technical_skills=json.dumps(result.get("technical_skills", {})),
+        extraction_method=result.get("extraction_method", "regex_and_ml")
     )
 
     try:
@@ -307,6 +309,30 @@ def delete_analysis(analysis_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": f"Failed to delete analysis: {str(e)}"}), 500
+
+
+# ─────────────────────────────────────────────────────────────
+# TECHNICAL SKILL EXTRACTION (HYBRID ML + REGEX)
+# ─────────────────────────────────────────────────────────────
+@api_bp.route("/skills/extract", methods=["POST"])
+@login_required
+def extract_technical_skills_endpoint():
+    data = request.get_json(silent=True) or {}
+    text = data.get("text")
+    resume_id = data.get("resume_id")
+
+    if not text and resume_id:
+        user = get_current_user()
+        resume = Resume.query.filter_by(id=resume_id, user_id=user.id).first()
+        if resume:
+            text = resume.extracted_text
+
+    if not text:
+        return jsonify({"error": "No text or valid resume_id provided."}), 400
+
+    from backend.skill_extractor import extract_technical_skills_hybrid
+    res = extract_technical_skills_hybrid(text)
+    return jsonify(res), 200
 
 
 # ─────────────────────────────────────────────────────────────

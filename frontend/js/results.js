@@ -146,6 +146,45 @@ function renderResults(item) {
     }
   }
 
+  // Categorized Technical Skills (Hybrid ML & Regex)
+  const techSkills = item.technical_skills || {};
+  const methodPill = document.getElementById('tech-skills-method-pill');
+  const techGrid = document.getElementById('tech-skills-categories-grid');
+
+  if (methodPill) {
+    const method = item.extraction_method || 'regex_and_ml';
+    methodPill.textContent = `Method: ${method === 'regex_and_ml' ? 'Regex + ML Classifier' : method}`;
+  }
+
+  if (techGrid) {
+    const domainLabels = [
+      { key: 'programming_languages', label: 'Programming Languages' },
+      { key: 'frameworks', label: 'Frameworks & Libraries' },
+      { key: 'databases', label: 'Databases & Data Platforms' },
+      { key: 'cloud_devops', label: 'Cloud & DevOps' },
+      { key: 'developer_tools', label: 'Developer Tools & Platforms' },
+    ];
+
+    techGrid.innerHTML = domainLabels.map(domain => {
+      const skillsInDomain = techSkills[domain.key] || [];
+      const tagsHtml = skillsInDomain.length > 0
+        ? skillsInDomain.map(s => `<span class="skill-tag neutral" style="font-size: 12px; padding: 4px 10px;">${escapeHtml(s)}</span>`).join('')
+        : `<span style="color: var(--text-muted); font-size: 12px;">No skills detected</span>`;
+
+      return `
+        <div style="background-color: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h5 style="margin: 0; font-size: 13px; font-weight: 600; color: var(--text-primary);">${escapeHtml(domain.label)}</h5>
+            <span style="font-size: 11px; color: var(--text-muted); background: var(--bg-card); padding: 2px 6px; border-radius: 10px;">${skillsInDomain.length}</span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            ${tagsHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
   // Section Quality Audit (6 Sections)
   const sections = item.section_analysis || {};
   const sectionGrid = document.getElementById('section-grid');
